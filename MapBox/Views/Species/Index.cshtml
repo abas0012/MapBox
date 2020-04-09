@@ -1,0 +1,123 @@
+﻿@model IEnumerable<MapBox.Models.Species>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .filter-group {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+        /*position: absolute;*/
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        border-radius: 3px;
+        width: 120px;
+        color: #fff;
+    }
+
+        .filter-group input[type='checkbox']:first-child + label {
+            border-radius: 3px 3px 0 0;
+        }
+
+        .filter-group label:last-child {
+            border-radius: 0 0 3px 3px;
+            border: none;
+        }
+
+        .filter-group input[type='checkbox'] {
+            display: none;
+        }
+
+            .filter-group input[type='checkbox'] + label {
+                background-color: #3386c0;
+                display: block;
+                cursor: pointer;
+                padding: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+            }
+
+            .filter-group input[type='checkbox'] + label {
+                background-color: #3386c0;
+                text-transform: capitalize;
+            }
+
+                .filter-group input[type='checkbox'] + label:hover,
+                .filter-group input[type='checkbox']:checked + label {
+                    background-color: #4ea0da;
+                }
+
+                    .filter-group input[type='checkbox']:checked + label:before {
+                        content: '✔';
+                        margin-right: 5px;
+                    }
+</style>
+<h2>Index</h2>
+<div id="map" style="height:300px"></div> <!--This is the Map-->
+<nav id="filter-group" class="filter-group"></nav> <!--This is the filter elements-->
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LGA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Month)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Day)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="coordinates">
+            <td class="name">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="latitude">
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td class="longitude">
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td class="lga">
+                @Html.DisplayFor(modelItem => item.LGA)
+            </td>
+            <td class="year">
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td class="month">
+                @Html.DisplayFor(modelItem => item.Month)
+            </td>
+            <td class="day">
+                @Html.DisplayFor(modelItem => item.Day)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/mapbox")
+}
