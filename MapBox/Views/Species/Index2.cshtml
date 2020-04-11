@@ -1,61 +1,39 @@
 ﻿@model IEnumerable<MapBox.Models.Species>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index2";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    .filter-group {
-        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        font-weight: 600;
+    .filter-ctrl {
         /*position: absolute;*/
         top: 10px;
         right: 10px;
         z-index: 1;
-        border-radius: 3px;
-        width: 120px;
-        color: #fff;
     }
 
-        .filter-group input[type='checkbox']:first-child + label {
-            border-radius: 3px 3px 0 0;
+        .filter-ctrl input[type='text'] {
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            width: 100%;
+            border: 0;
+            background-color: #fff;
+            margin: 0;
+            color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            width: 180px;
         }
-
-        .filter-group label:last-child {
-            border-radius: 0 0 3px 3px;
-            border: none;
-        }
-
-        .filter-group input[type='checkbox'] {
-            display: none;
-        }
-
-            .filter-group input[type='checkbox'] + label {
-                background-color: #3386c0;
-                display: block;
-                cursor: pointer;
-                padding: 10px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-            }
-
-            .filter-group input[type='checkbox'] + label {
-                background-color: #3386c0;
-                text-transform: capitalize;
-            }
-
-                .filter-group input[type='checkbox'] + label:hover,
-                .filter-group input[type='checkbox']:checked + label {
-                    background-color: #4ea0da;
-                }
-
-                    .filter-group input[type='checkbox']:checked + label:before {
-                        content: '✔';
-                        margin-right: 5px;
-                    }
 </style>
 <h2>Index</h2>
 <div id="map" style="height:300px"></div> <!--This is the Map-->
-<nav id="filter-group" class="filter-group"></nav> <!--This is the filter elements-->
+<div class="filter-ctrl">
+    <input id="filter-input"
+           type="text"
+           name="filter"
+           placeholder="Filter by name" />
+</div> <!--This is the filter elements-->
+<div id="feature-listing" class="listing"></div> <!--Listing Element-->
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -119,5 +97,5 @@
 
 </table>
 @section Scripts {
-    @Scripts.Render("~/bundles/mapbox")
+    @Scripts.Render("~/bundles/mapboxv2")
 }

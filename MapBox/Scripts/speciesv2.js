@@ -2,11 +2,11 @@
 * This is a simple JavaScript demonstration of how to call MapBox API to load the maps.
 * I have set the default configuration to enable the geocoder and the navigation control.
 * https://www.mapbox.com/mapbox-gl-js/example/popup-on-click/
-*
 * 
-* Filter by Tickbox  
+*
+* Filter by Text Input 
 * @author Adhi Baskoro <abas0012@student.monash.edu>
-* Date: 09/04/2020
+* Date: 11/04/2020
 */
 const TOKEN = "pk.eyJ1IjoiYWJhczAwMTIiLCJhIjoiY2s4cDBvejUxMDJjaTNtcXViemgxYTI1dCJ9.wRCYToYunc4isymyq4Gy_Q";
 var species = [];
@@ -53,12 +53,14 @@ for (i = 0; i < species.length; i++) {
 
 //finaldata
 var finaldata = {
-        "type": "FeatureCollection",
-        "features": data
-    }
+    "type": "FeatureCollection",
+    "features": data
+}
 
 mapboxgl.accessToken = TOKEN;
-var filterGroup = document.getElementById('filter-group'); //filter element
+var listingEl = document.getElementById('feature-listing'); //Listing element
+var layerIDs = []; // Will contain a list used to filter against.
+var filterInput = document.getElementById('filter-input'); //filter element
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v10', //light map
@@ -95,7 +97,7 @@ map.on('load', function () {
                         'Hobsons Bay',
                         '#223b53',
                         /*other*/'rgba(55,148,179,1)',
-                        ]
+                    ]
                     //'rgba(55,148,179,1)'
                 },
                 'layout': {
@@ -106,27 +108,22 @@ map.on('load', function () {
                 'filter': ['==', 'lga', lga]
             });
 
-            // Add checkbox and label elements for the layer.
-            var input = document.createElement('input');
-            input.type = 'checkbox';
-            input.id = layerID;
-            input.checked = false; //set to untick on initial load
-            filterGroup.appendChild(input);
-
-            var label = document.createElement('label');
-            label.setAttribute('for', layerID);
-            label.textContent = lga; //Label names
-            filterGroup.appendChild(label);
-
-            // When the checkbox changes, update the visibility of the layer.
-            input.addEventListener('change', function (e) {
-                map.setLayoutProperty(
-                    layerID,
-                    'visibility',
-                    e.target.checked ? 'visible' : 'none'
-                );
-            });
+            layerIDs.push(layerID);
         }
+    });
+
+    //Filter Function
+    filterInput.addEventListener('keyup', function (e) {
+        // If the input value matches a layerID set
+        // it's visibility to 'visible' or else hide it.
+        var value = e.target.value; //currently matches EXACT string //removed .trim().toLowerCase()
+        layerIDs.forEach(function (layerID) {
+            map.setLayoutProperty(
+                layerID,
+                'visibility',
+                layerID.indexOf(value) > -1 ? 'visible' : 'none'
+            );
+        });
     });
 });
 
@@ -168,4 +165,3 @@ map.addControl(
         trackUserLocation: true
     })
 );
-

@@ -22,9 +22,13 @@ namespace MapBox
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
-            // added species.js to the bundle called mapbox.
+            // added species.js to the bundle called mapbox. Filter by Tickbox
             bundles.Add(new ScriptBundle("~/bundles/mapbox").Include(
             "~/Scripts/species.js"));
+
+            // added species.js to the bundle called mapbox. Filter by Text
+            bundles.Add(new ScriptBundle("~/bundles/mapboxv2").Include(
+            "~/Scripts/speciesv2.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

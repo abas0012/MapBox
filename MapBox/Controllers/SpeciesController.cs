@@ -20,6 +20,12 @@ namespace MapBox.Controllers
             return View(db.Species.ToList());
         }
 
+        // GET: Species
+        public ActionResult Index2()
+        {
+            return View(db.Species.ToList());
+        }
+
         // GET: Species/Details/5
         public ActionResult Details(int? id)
         {
